@@ -1,3 +1,4 @@
+package Chapter1;
 import java.util.Scanner;
 
 public class StringPermutation {

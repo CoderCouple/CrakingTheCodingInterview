@@ -19,14 +19,14 @@ public class isUnique {
 			return false;
 		}
         
-		System.out.println(inputString);
+		//System.out.println(inputString);
 		char array [] = inputString.toCharArray();
 		
 		Arrays.sort(array);
-		System.out.println(Arrays.toString(array));
+		//System.out.println(Arrays.toString(array));
 		
 			for (int i = 0; i < array.length-1; i++) {
-				System.out.println(array[i]+" "+array[i+1]);
+				//System.out.println(array[i]+" "+array[i+1]);
 				if (inputString.charAt(i) == inputString.charAt(i+1))
 					return false;
 

@@ -1,3 +1,5 @@
+package Chapter1;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class isUnique {
@@ -11,14 +13,24 @@ public class isUnique {
 			System.out.println("This is sn empty String..!!!");
 			return true;
 		}
-
-		for (int i = 0; i < inputString.length() - 1; i++) {
-			for (int j = i + 1; j < inputString.length(); j++) {
-				if (s.charAt(i) == s.charAt(j))
+		
+		if (inputString.length() > 256) {
+			System.out.println("I am assuming it is an ASCII String...!!!");
+			return false;
+		}
+        
+		System.out.println(inputString);
+		char array [] = inputString.toCharArray();
+		
+		Arrays.sort(array);
+		System.out.println(Arrays.toString(array));
+		
+			for (int i = 0; i < array.length-1; i++) {
+				System.out.println(array[i]+" "+array[i+1]);
+				if (inputString.charAt(i) == inputString.charAt(i+1))
 					return false;
 
 			}
-		}
 
 		return true;
 	}

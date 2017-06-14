@@ -1,1 +1,1 @@
-# CrakingTheCodingInterview
+Solution for problems of CrakingTheCodingInterview book

@@ -31,7 +31,7 @@ public class StackMin {
 			
 		if (size == 0) {
 			min[++minPtr] = element;
-		} else if (element < min[minPtr]) {
+		} else if (element <= min[minPtr]) {
 			min[++minPtr] = element;
 		}
 		
@@ -51,6 +51,7 @@ public class StackMin {
 			min[minPtr]=0;
 			minPtr--;
 		}
+		array[top]=0;
 		top--;
 		size--;
 		return temp;
@@ -81,7 +82,7 @@ public class StackMin {
 		return Arrays.toString(min);
 	}
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 
 		StackMin sm = new StackMin();
 		sm.push(5);
@@ -104,8 +105,10 @@ public class StackMin {
 		System.out.println(sm.getMinimum());
 		sm.push(0);
 		sm.push(-1);
+		sm.push(-1);
+		sm.pop();
 		System.out.println(sm);
-		System.out.println(sm.min.length);
+		//System.out.println(sm.min.length);
 		System.out.println(sm.toString1());
 	}
 

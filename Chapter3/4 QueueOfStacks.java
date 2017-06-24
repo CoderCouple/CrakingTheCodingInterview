@@ -4,11 +4,13 @@ import java.util.Stack;
 
 public class QueueOfStacks {
 
-	Stack<Integer> s1 = new Stack<Integer>();
-	Stack<Integer> s2 = new Stack<Integer>();
+	Stack<Integer> s1;
+	Stack<Integer> s2;
 	int size;
 
 	public QueueOfStacks() {
+		s1 = new Stack<Integer>();
+		s2 = new Stack<Integer>();
 		size = 0;
 
 	}

@@ -1,4 +1,6 @@
 
+import java.util.Stack;
+
 public class BinaryTree {
 
 	TNode root;
@@ -15,7 +17,7 @@ public class BinaryTree {
 		}
 
 		TNode ptr = root;
-		TNode parent = ptr;
+		TNode parent = null;
 		boolean isLeft = true;
 
 		while (ptr != null) {
@@ -41,7 +43,7 @@ public class BinaryTree {
 		}
 
 		TNode ptr = root;
-		TNode parent = ptr;
+		TNode parent = null;
 		boolean isLeft = true;
 
 		while (ptr != null) {
@@ -63,12 +65,12 @@ public class BinaryTree {
 	}
 
 	public boolean remove(int element) {
-
+		// if the binary tree is empty
 		if (root == null) {
 			return false;
 		}
 
-		// case 1 : root is element
+		// case 1 : root is element to be deleted
 		if (root.data == element) {
 			if (root.rightChild == null) {
 				root = root.leftChild;
@@ -80,7 +82,13 @@ public class BinaryTree {
 				return true;
 			}
 
-			// mainDelete(root);
+			if (root.leftChild != null && root.rightChild != null) {
+				TNode min = minNode(root.rightChild);
+				TNode minParent = minNodeParent(root.rightChild);
+				root.data = min.data;
+				minParent.leftChild = null;
+				return true;
+			}
 
 		}
 
@@ -88,20 +96,20 @@ public class BinaryTree {
 		TNode parent = null;
 		while (current != null) {
 			parent = current;
-			if (current.data == element) {
+			if (element == current.data) {
 				break;
 			}
 
-			if (current.data < element) {
+			if (element > current.data) {
 				current = current.rightChild;
 
-			} else {
+			} else if (element < current.data) {
 				current = current.leftChild;
 			}
 
 		}
 
-		// Reached theend of the tree but did not find the element
+		// Reached the end of the tree but did not find the element
 		if (current == null) {
 			return false;
 		}
@@ -109,61 +117,158 @@ public class BinaryTree {
 		// case2: deleting the leaf node
 
 		if (current.leftChild == null && current.rightChild == null) {
-			if (parent.leftChild == current)
+			if (parent.leftChild == current) {
 				parent.leftChild = null;
-			else {
+				return true;
+			}
+
+			if (parent.rightChild == current) {
 				parent.rightChild = null;
+				return true;
 			}
 		}
 
 		// case3: deleting a node with one child
-		
-		if (current.leftChild == null && current.rightChild != null) {
-			if (parent.leftChild == current)
-				parent.leftChild = null;
-			else {
-				parent.rightChild = null;
+
+		if (current.leftChild != null && current.rightChild == null) {
+			if (parent.leftChild == current) {
+				parent.leftChild = current.leftChild;
+				current.leftChild = null;
+				return true;
 			}
+			if (parent.rightChild == current) {
+				parent.rightChild = current.leftChild;
+				current.leftChild = null;
+				return true;
+			}
+		}
+
+		if (current.leftChild == null && current.rightChild != null) {
+			if (parent.leftChild == current) {
+				parent.leftChild = current.rightChild;
+				current.rightChild = null;
+				return true;
+			}
+			if (parent.rightChild == current) {
+				parent.rightChild = current.rightChild;
+				current.rightChild = null;
+				return true;
+			}
+		}
+
+		// case4: deleting a node with two child
+		if (current.leftChild != null && current.rightChild != null) {
+			TNode min = minNode(current.rightChild);
+			TNode minParent = minNodeParent(current.rightChild);
+			current.data = min.data;
+			minParent.leftChild = null;
+			return true;
 		}
 
 		return false;
 
 	}
 
+	public TNode minNode(TNode node) {
+		TNode minNode = root;
+		while (minNode.leftChild != null) {
+			minNode = minNode.leftChild;
+		}
+		return minNode;
+	}
+
+	public TNode minNodeParent(TNode node) {
+		TNode minNode = root;
+		TNode minNodeParent = root;
+		while (minNode.leftChild != null) {
+			minNodeParent = minNode;
+			minNode = minNode.leftChild;
+		}
+		return minNodeParent;
+	}
+
 	public void inOrderTraversal(TNode node) {
 		if (node == null)
 			return;
 
-		inOrderTraversal(node.leftChild);
-		System.out.println(node.data + " ");
-		inOrderTraversal(node.rightChild);
-	}
+		Stack<TNode> nodeStorage = new Stack<TNode>();
+		TNode currentNode = node;
 
-	public void inOrderTraversalReversed(TNode node) {
-		if (node == null)
-			return;
+		while (currentNode != null) {
+			nodeStorage.push(currentNode);
+			currentNode = currentNode.leftChild;
+		}
 
-		inOrderTraversalReversed(node.rightChild);
-		System.out.println(node.data + " ");
-		inOrderTraversalReversed(node.leftChild);
+		while (nodeStorage.size() > 0) {
+
+			currentNode = nodeStorage.pop();
+			System.out.println(currentNode.data + " ");
+			if (currentNode.rightChild != null) {
+				currentNode = currentNode.rightChild;
+
+				while (currentNode != null) {
+					nodeStorage.push(currentNode);
+					currentNode = currentNode.leftChild;
+				}
+			}
+
+		}
 	}
 
 	public void preOrderTraversal(TNode node) {
 		if (node == null)
 			return;
 
-		System.out.println(node.data + " ");
-		preOrderTraversal(node.leftChild);
-		preOrderTraversal(node.rightChild);
+		Stack<TNode> nodeStorage = new Stack<TNode>();
+		TNode currentNode = node;
+		nodeStorage.push(currentNode);
+
+		while (nodeStorage.size() > 0) {
+
+			TNode mynode = nodeStorage.peek();
+			System.out.print(mynode.data + " ");
+			nodeStorage.pop();
+
+			if (mynode.rightChild != null) {
+				nodeStorage.push(mynode.rightChild);
+			}
+			if (mynode.leftChild != null) {
+				nodeStorage.push(mynode.leftChild);
+			}
+		}
 	}
 
-	public void postOrderTraversal(TNode node) {
+	public void inOrderTraversalReversed(TNode node) {
 		if (node == null)
 			return;
 
-		postOrderTraversal(node.leftChild);
-		postOrderTraversal(node.rightChild);
-		System.out.println(node.data + " ");
+	}
+
+	public void postOrderTraversal(TNode node) {
+		Stack<TNode> s1 = new Stack<>();
+		Stack<TNode> s2 = new Stack<>();
+
+		if (node == null)
+			return;
+
+		s1.push(node);
+
+		// Run while first stack is not empty
+		while (!s1.isEmpty()) {
+			TNode temp = s1.pop();
+			s2.push(temp);
+
+			if (temp.leftChild != null)
+				s1.push(temp.leftChild);
+			if (temp.rightChild != null)
+				s1.push(temp.rightChild);
+		}
+
+		// Print all elements of second stack
+		while (!s2.isEmpty()) {
+			TNode temp = s2.pop();
+			System.out.print(temp.data + " ");
+		}
 	}
 
 	public void printStrategy(int strategy) {
@@ -177,19 +282,53 @@ public class BinaryTree {
 			inOrderTraversalReversed(root);
 	}
 
+	public static boolean isLeaf(TNode n) {
+		return n.leftChild == null && n.rightChild == null;
+	}
+
 	public static void main(String[] args) {
 
 		BinaryTree bt = new BinaryTree();
+
+		bt.add(4);
+		bt.add(2);
+		bt.add(1);
+		bt.add(3);
 		bt.add(5);
-		bt.add(-55);
-		bt.add(55);
-		bt.add(100);
-		bt.add(200);
-		bt.add(-5);
-		bt.add(95);
+		bt.add(20);
+		bt.add(30);
+		bt.add(13);
+		bt.add(9);
+		bt.add(7);
 		bt.add(12);
-		System.out.println("Element Present: " + bt.search(-55));
-		bt.printStrategy(4);
+		bt.add(6);
+		bt.add(8);
+		bt.add(10);
+		bt.add(17);
+		bt.add(15);
+		bt.add(14);
+		bt.add(16);
+		bt.add(19);
+		bt.add(18);
+		bt.add(25);
+		bt.add(35);
+		bt.add(28);
+		bt.add(22);
+		bt.add(33);
+		bt.add(40);
+
+		System.out.println("***================================***");
+		bt.printStrategy(1);
+		System.out.println("***================================***");
+		System.out.println("Is element present ? :" + bt.search(35));
+		// bt.remove(5);
+		// bt.remove(100);
+		// bt.remove(95);
+		// bt.add(4);
+		// bt.add(5);
+		// System.out.println("Is element Present : " + bt.search(12));
+		// System.out.println("Element Present: " + bt.search(-55));
+		// bt.printStrategy(1);
 
 	}
 

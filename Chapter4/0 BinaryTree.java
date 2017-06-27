@@ -95,11 +95,10 @@ public class BinaryTree {
 		TNode current = root;
 		TNode parent = null;
 		while (current != null) {
-			parent = current;
 			if (element == current.data) {
 				break;
 			}
-
+			parent = current;
 			if (element > current.data) {
 				current = current.rightChild;
 
@@ -122,7 +121,7 @@ public class BinaryTree {
 				return true;
 			}
 
-			if (parent.rightChild == current) {
+			else if (parent.rightChild == current) {
 				parent.rightChild = null;
 				return true;
 			}
@@ -295,40 +294,15 @@ public class BinaryTree {
 		bt.add(1);
 		bt.add(3);
 		bt.add(5);
-		bt.add(20);
-		bt.add(30);
-		bt.add(13);
-		bt.add(9);
-		bt.add(7);
-		bt.add(12);
-		bt.add(6);
-		bt.add(8);
-		bt.add(10);
-		bt.add(17);
-		bt.add(15);
-		bt.add(14);
-		bt.add(16);
-		bt.add(19);
-		bt.add(18);
-		bt.add(25);
-		bt.add(35);
-		bt.add(28);
-		bt.add(22);
-		bt.add(33);
-		bt.add(40);
 
 		System.out.println("***================================***");
 		bt.printStrategy(1);
 		System.out.println("***================================***");
 		System.out.println("Is element present ? :" + bt.search(35));
-		// bt.remove(5);
-		// bt.remove(100);
-		// bt.remove(95);
-		// bt.add(4);
-		// bt.add(5);
-		// System.out.println("Is element Present : " + bt.search(12));
-		// System.out.println("Element Present: " + bt.search(-55));
-		// bt.printStrategy(1);
+		bt.remove(4);
+		System.out.println("***================================***");
+		bt.printStrategy(1);
+		System.out.println("***================================***");
 
 	}
 

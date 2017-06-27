@@ -294,12 +294,17 @@ public class BinaryTree {
 		bt.add(1);
 		bt.add(3);
 		bt.add(5);
-
+		bt.add(55);
+		bt.add(45);
+		bt.add(40);
+		bt.add(-5);
+		bt.add(-55);
+		
 		System.out.println("***================================***");
 		bt.printStrategy(1);
 		System.out.println("***================================***");
 		System.out.println("Is element present ? :" + bt.search(35));
-		bt.remove(4);
+		bt.remove(45);
 		System.out.println("***================================***");
 		bt.printStrategy(1);
 		System.out.println("***================================***");

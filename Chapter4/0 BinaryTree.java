@@ -1,5 +1,7 @@
 
+import java.util.Queue;
 import java.util.Stack;
+import java.util.LinkedList;
 
 public class BinaryTree {
 
@@ -228,6 +230,11 @@ public class BinaryTree {
 			System.out.print(mynode.data + " ");
 			nodeStorage.pop();
 
+			// printing the data first abd then
+			// pushing the right child first and left child later in the stack
+			// because I want to print it in the reverse order i.e.(root -> left
+			// -> right)
+
 			if (mynode.rightChild != null) {
 				nodeStorage.push(mynode.rightChild);
 			}
@@ -241,6 +248,72 @@ public class BinaryTree {
 		if (node == null)
 			return;
 
+	}
+
+	public void levelOrderTraversal(TNode node) {
+
+		if (node == null)
+			return;
+
+		Queue<TNode> nodeQueue = new LinkedList<TNode>();
+		TNode marker = new TNode(-1);
+
+		nodeQueue.add(node);
+		nodeQueue.add(marker);
+		while (!nodeQueue.isEmpty()) {
+
+			TNode temp = nodeQueue.peek();
+			nodeQueue.remove();
+			if (temp.data == -1 ) {
+				System.out.println("\n");
+				if(nodeQueue.size()!=0)
+				nodeQueue.add(marker);
+				
+				
+			} else {
+				System.out.print(temp.data + " ");
+				if (temp.leftChild != null)
+					nodeQueue.add(temp.leftChild);
+				if (temp.rightChild != null)
+					nodeQueue.add(temp.rightChild);
+			}
+
+		}
+
+	}
+
+	public void myOwnPostOrderTraversal() {
+		Stack<TNode> s1 = new Stack<>();
+		Stack<Integer> s2 = new Stack<>();
+
+		TNode n = root;
+		if (n != null) {
+			s1.push(n);
+			s2.push(1);
+		}
+
+		while (!s1.isEmpty()) {
+			TNode newN = s1.pop();
+			Integer i = s2.pop();
+
+			if (i.equals(1)) {
+				s1.push(newN);
+				s2.push(2);
+				if (newN.leftChild != null) {
+					s1.push(newN.leftChild);
+					s2.push(1);
+				}
+			} else if (i.equals(2)) {
+				s1.push(newN);
+				s2.push(3);
+				if (newN.rightChild != null) {
+					s1.push(newN.rightChild);
+					s2.push(1);
+				}
+			} else if (i.equals(3)) {
+				System.out.print(newN.data + " ");
+			}
+		}
 	}
 
 	public void postOrderTraversal(TNode node) {
@@ -279,6 +352,10 @@ public class BinaryTree {
 			postOrderTraversal(root);
 		else if (strategy == 4)
 			inOrderTraversalReversed(root);
+		else if (strategy == 5)
+			myOwnPostOrderTraversal();
+		else if (strategy == 6)
+			levelOrderTraversal(root);
 	}
 
 	public static boolean isLeaf(TNode n) {
@@ -292,23 +369,27 @@ public class BinaryTree {
 		bt.add(4);
 		bt.add(2);
 		bt.add(1);
-		bt.add(3);
+		bt.add(300);
 		bt.add(5);
-		bt.add(55);
+		bt.add(-10);
 		bt.add(45);
 		bt.add(40);
 		bt.add(-5);
 		bt.add(-55);
-		
-		System.out.println("***================================***");
-		bt.printStrategy(1);
-		System.out.println("***================================***");
-		System.out.println("Is element present ? :" + bt.search(35));
-		bt.remove(45);
-		System.out.println("***================================***");
-		bt.printStrategy(1);
-		System.out.println("***================================***");
 
+		// System.out.println("***================================***");
+		// bt.printStrategy(1);
+		// System.out.println("***================================***");
+		// System.out.println("Is element present ? :" + bt.search(35));
+		// bt.remove(45);
+		//System.out.println("***================================***");
+		bt.printStrategy(3);
+		System.out.println("\n***================================***");
+
+		//System.out.println("***================================***");
+		bt.printStrategy(5);
+		System.out.println("\n***================================***");
+		bt.printStrategy(6);
 	}
 
 }

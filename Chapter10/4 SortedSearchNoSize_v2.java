@@ -81,7 +81,7 @@ public class SortedSearchNoSize {
 	}
 
 	public static void main(String[] args) {
-		int element = 6;
+		int element = 13;
 		int searchFactor = 2;
 		int array[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 8, 8, 8, 8, 9, 10, 11, 11, 12, 13, 14, 15 };
 		System.out.println("Element at index :" + SortedSearchNoSize(element, array, 2));

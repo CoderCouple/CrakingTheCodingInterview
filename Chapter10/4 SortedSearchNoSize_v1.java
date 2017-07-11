@@ -28,24 +28,15 @@ public class SortedSearchNoSize {
 		System.out.println(" * ");
 
 		if (array[searchStartRange] <= element && element < array[searchEndRange]) {
-			binarySearch(element, array, searchStartRange, searchEndRange);
+			return binarySearch(element, array, searchStartRange, searchEndRange);
 		} else {
 			if (elementAt(searchFactor * 2) != -1) {
 				return SortedSearchNoSize(element, array, searchFactor * 2);
 			} else {
-				int x = searchFactor;
-				while (elementAt(x) != -1) {
-
-					if (array[x] == element)
-						return x;
-					else {
-						x++;
-					}
-				}
+				return getLastSectionElementBybinarySearch(element,array,searchFactor,searchFactor * 2);
 			}
 		}
 
-		return -1;
 	}
 
 	public static int binarySearch(int element, int array[], int lb, int ub) {
@@ -59,12 +50,11 @@ public class SortedSearchNoSize {
 		if (array[mid] == element) {
 			return mid;
 		} else if (element < array[mid]) {
-			binarySearch(element, array, lb, mid - 1);
+			return binarySearch(element, array, lb, mid - 1);
 		} else {
-			binarySearch(element, array, mid + 1, ub);
+			return binarySearch(element, array, mid + 1, ub);
 		}
 
-		return -1;
 	}
 
 	public static void main(String[] args) {

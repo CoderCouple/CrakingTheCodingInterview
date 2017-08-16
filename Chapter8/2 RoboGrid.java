@@ -1,21 +1,20 @@
 package Chapter8;
 
-public class MagicIndex1 {
+public class RoboGrid {
 
-	public static int getMagicIndex(int array[]) {
+	public static int getRoboGridWays(int r, int c) {
 
-		for (int i = 0; i < array.length; i++) {
-			if (array[i] == i) {
-				return i;
-			}
-		}
-		return -1;
+		if (r < 0 || c < 0) {
+			return 0;
+		} else if (r == 1 && c == 1)
+			return 1;
+
+		return getRoboGridWays(r - 1, c) + getRoboGridWays(r, c - 1);
 	}
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		int a[] = { -5, -2, -1, 1, 2, 5 };
-		System.out.println("magic Index is :" + getMagicIndex(a));
+
+		System.out.println("No of ways :" + getRoboGridWays(3, 3));
 
 	}
 

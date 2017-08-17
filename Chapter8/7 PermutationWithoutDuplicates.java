@@ -30,7 +30,7 @@ public class PermutationWithoutDuplicates {
 	}
 
 	public static void main(String[] args) {
-		String input = "MAAN";
+		String input = "MAN";
 		List<String> output = new ArrayList<String>();
 		getPermutationOfString(input, 0, input.length(), output);
 		System.out.println(output);
